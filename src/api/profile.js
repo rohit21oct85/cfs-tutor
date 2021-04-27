@@ -66,9 +66,9 @@ export async function getDashboardData(formData) {
     }
 }
 
-export async function deleteEducation(key) {
+export async function deleteEducation(key,email) {
     try {
-        const res = await authAxios.post(apiUrl + 'books/delete-education', {key: key})
+        const res = await authAxios.post(apiUrl + 'auth/delete-education', {id: key,email:email})
         return res.data;
     }
     catch(e){

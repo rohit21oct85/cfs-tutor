@@ -1,4 +1,4 @@
-import Link from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {setLogout} from '../api/auth'
 import {useHistory} from 'react-router-dom'
 
@@ -23,7 +23,7 @@ export default function Header(){
                 <li>
                     <div className="navbar-header">
                         <a href="#" className="bars"></a>
-                        <a className="navbar-brand" href="#"><span className="m-l-9"><img src="../assets/images/logo.png" className="img-fluid" alt="logo" style={{width:"240px"}}/></span></a>
+                        <Link href="/dashboard"><span className="m-l-9"><img src="../assets/images/logo.png" className="img-fluid" alt="logo" style={{width:"240px"}}/></span></Link>
                     </div>
                 </li>
                 <li><a href="#" className="ls-toggle-btn" data-close="true"><i className="zmdi zmdi-swap"></i></a></li>

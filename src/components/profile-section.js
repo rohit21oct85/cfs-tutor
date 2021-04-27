@@ -3,6 +3,7 @@ import {useHistory,useParams} from 'react-router-dom';
 import saveFormFirst from '../api/profile';
 import { saveEducation, saveMasteredSubject, saveBankDetails, getTutotDetails, getSubjectSubSubjectData, deleteEducation } from '../api/profile';
 import { Link } from 'react-router-dom'
+import BlockHeader from './block-header';
 
 export default function ProfileSection(){
     const [stepCounter, setStepCounter] = useState(1);
@@ -149,8 +150,7 @@ export default function ProfileSection(){
     }
 
     const deleteItem = async(index) => {
-        console.log(index);
-        const response = await deleteEducation(index);
+        const response = await deleteEducation(index, localStorage.getItem('tutor_email'));
     } 
 
     const selectSubject = (e) => {
@@ -181,20 +181,7 @@ export default function ProfileSection(){
 
     return(
         <section className="content profile-page">
-            <div className="block-header">
-                <div className="row">
-                    <div className="col-lg-7 col-md-6 col-sm-12">
-                        <h2>Profile <small>Welcome to All Assignment Services</small> </h2>
-                    </div>
-                    <div className="col-lg-5 col-md-6 col-sm-12">
-                        <button className="btn btn-white btn-icon btn-round float-right m-l-10" type="button"> <i className="zmdi zmdi-edit"></i> </button>
-                        <ul className="breadcrumb float-md-right">
-                            <li className="breadcrumb-item"><a href="#"><i className="zmdi zmdi-home"></i> Dashboard</a></li>
-                            <li className="breadcrumb-item active">Profile Details</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <BlockHeader/>
             <div className="container-fluid">
                 <div className="row clearfix">
                     <div className="col-lg-12 col-md-12">
@@ -346,7 +333,7 @@ export default function ProfileSection(){
                                                                     <td>{item.grade}</td>
                                                                     <td>{item.subject}</td>
                                                                     <td>{item.school}</td>
-                                                                    <td><a href="#"  onClick={()=>{deleteItem(key)}}>[DELETE]</a></td>
+                                                                    <td><a href="#"  onClick={()=>{deleteItem(item._id)}}>[DELETE]</a></td>
                                                                 </tr>
                                                             )
                                                         })}
