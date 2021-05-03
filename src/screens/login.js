@@ -60,7 +60,10 @@ export default function Login(){
 
     return(
         <div className="container">
-            <div className="row">
+            <div className="row col-md-4" style={{ margin: '25vh auto' }}>
+                <div className="card p-3">
+                <h4 className="mt-1 mb-1">Login</h4>
+                <hr className="mt-1 mb-2"/>
                 <form onSubmit={submitForm}>
                     {error && (<p style={{ color: 'red', margin: '0px' }}>{error}</p>)}
                     <div className="mb-3">
@@ -74,6 +77,7 @@ export default function Login(){
                     </div>
                     <button type="submit" className="btn btn-primary">{loading ? <span>signing in...</span> : 'Login'}</button>
                 </form>
+                </div>
             </div>
         </div>
     )
