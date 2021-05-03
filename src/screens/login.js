@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import  setLogin  from '../api/auth'
+import {Link} from 'react-router-dom'
 
 export default function Login(){
     const [error, setError] = useState(null);
@@ -25,7 +26,6 @@ export default function Login(){
             setLoading(true);
             const formData = {email: emailRef.current.value , password: passwordRef.current.value};
             const response = await setLogin(formData)
-            console.log(response);
             if(response.status=== 401){
                 setError("Email or password not matched");
                 setLoading(false);
@@ -37,6 +37,7 @@ export default function Login(){
                 localStorage.setItem('tutor_approve', response.data.tutor.approve);
                 localStorage.setItem('tutor_id', response.data.tutor._id);
                 localStorage.setItem('mastered-subject-id', response.data.tutor.master_sub_subject_id);
+                console.log(response);
                 if(response.data.tutor.approve == 1){
                     setLoading(false);
                     history.push('/dashboard');
@@ -75,7 +76,10 @@ export default function Login(){
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" ref={passwordRef}/>
                     </div>
+                    <div className="mb-3">
                     <button type="submit" className="btn btn-primary">{loading ? <span>signing in...</span> : 'Login'}</button>
+                    <span style={{float:"right"}}><Link to="/signup" style={{textDecoration: "none"}}>SignUp</Link></span>
+                    </div>
                 </form>
                 </div>
             </div>
