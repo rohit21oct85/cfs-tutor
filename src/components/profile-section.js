@@ -20,21 +20,55 @@ export default function ProfileSection(){
     const [subSubjectId, setSubSubjectId] = useState();
     const history = useHistory();
     const param = useParams();
+    const [data, setData] = React.useState({
+        fname: "",
+        lname: "",
+        hno: "" ,
+        street: "", 
+        city: "",
+        country: "",
+        zip: "",
+    })
+    const [qualification, setQualification] = React.useState({
+        degree: "",
+        grade: "",
+        school: "" ,
+        subject: "", 
+        years: "",
+    })
 
-    let data = {};
-    let qualification = {};
+    // let data = {};
+    // let qualification = {};
     let formdata = new FormData();
+
+    useEffect(() => {
+        async function getSubjects(){
+            const resp = await getSubjectSubSubjectData();
+            setCategory(resp)
+        }
+        getSubjects();        
+        return () => {
+        }
+    }, [])
 
     useEffect(()=>{
         async function getData()
         {
-            const resp = await getSubjectSubSubjectData();
-            setCategory(resp)
             const data = {email:localStorage.getItem('tutor_email')};
             const response = await getTutotDetails(data);
             let pageQ = response.data.data.education.length > 0 ? response.data.data.education : null;
             setQual(pageQ);
-            setPageData(response.data.data)
+            setData({
+                ...data,
+                ['fname']: response.data.data.fname,
+                ['lname']: response.data.data.lname,
+                ['hno']: response.data.data.house_name,
+                ['city']: response.data.data.city,
+                ['country']: response.data.data.country,
+                ['zip']: response.data.data.zipcode,
+                ['street']: response.data.data.street_name,
+            });
+            // setPageData(response.data.data)
             setBankDetails(response.data.bank_details)
             setSavedBankDetails(true); //since bank details are present
             setCheckBox(response.data.data['master_subject'])
@@ -57,10 +91,11 @@ export default function ProfileSection(){
                 // for (var key in pageData) {
                 //     data[key] = pageData[key]
                 // }
-                if( data['fname'] !== undefined || data['lname'] !== undefined 
-                    || data['hno'] !== undefined || data['street'] !== undefined 
-                    || data['city'] !== undefined || data['country'] !== undefined 
-                    || data['zip'] !== undefined){
+                console.log(data)
+                if( data['fname'] !== '' && data['lname'] !== '' 
+                    && data['hno'] !== '' && data['street'] !== '' 
+                    && data['city'] !== '' && data['country'] !== '' 
+                    && data['zip'] !== ''){
                     const response = await saveFormFirst(data);
                     if(response.status == 200){
                         setStepCounter(stepCounter => stepCounter + 1);
@@ -119,11 +154,22 @@ export default function ProfileSection(){
     }
 
     const handleData = (e) => {
-        data[e.target.name] = e.target.value;
+        // data[e.target.name] = e.target.value;
+        const value = e.target.value
+        setData({
+            ...data,
+            [e.target.name]: value
+        });
     }
 
     const secondForm = (e) => {
-        qualification[e.target.name] = e.target.value;
+        // qualification[e.target.name] = e.target.value;
+        const value = e.target.value
+        console.log(e.target.name,e.target.value)
+        setQualification({
+            ...qualification,
+            [e.target.name]: value
+        });
     }
     
     const saveDegree = async(e) => {
@@ -136,7 +182,7 @@ export default function ProfileSection(){
         formdata.append('years',qualification.years)
         const response = await saveEducation(formdata);
         if(response.status == 200){
-            qualification = {};
+            setQualification({});
         }
     }
 
@@ -205,37 +251,37 @@ export default function ProfileSection(){
                                                 <div className="col-lg-4 col-md-6">
                                                     <div className="form-group">
                                                         <label>First Name</label>
-                                                        <input type="text" name="fname" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.fname}/>
+                                                        <input type="text" name="fname" className="form-control" required onChange={handleData} defaultValue={data && data.fname}/>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>Last Name</label>
-                                                    <input type="text" name="lname" className="form-control" required  onChange={handleData} defaultValue={pageData && pageData.lname}/>
+                                                    <input type="text" name="lname" className="form-control" required  onChange={handleData} defaultValue={data && data.lname}/>
                                                 </div>
                                                 </div>
                                                 {/* <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" name="email" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.email}/>
+                                                    <input type="email" name="email" className="form-control" required onChange={handleData} defaultValue={data && data.email}/>
                                                 </div>
                                                 </div> */}
                                                 <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>House/Building Name</label>
-                                                    <input type="text" name="hno" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.house_name}/>
+                                                    <input type="text" name="hno" className="form-control" required onChange={handleData} defaultValue={data && data.hno}/>
                                                 </div>
                                                 </div>
                                                 <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>Street Name</label>
-                                                    <input type="text" name="street" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.street_name}/>
+                                                    <input type="text" name="street" className="form-control" required onChange={handleData} defaultValue={data && data.street}/>
                                                 </div>
                                                 </div>
                                                 <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>City</label>
-                                                    <input type="text" name="city" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.city}/>
+                                                    <input type="text" name="city" className="form-control" required onChange={handleData} defaultValue={data && data.city}/>
                                                 </div>
                                                 </div>
                                                 {/* <!--<div className="col-lg-4 col-md-6">
@@ -251,7 +297,7 @@ export default function ProfileSection(){
                                                 <div className="col-lg-4 col-md-6">
                                                     <div className="form-group m_p_0">
                                                         <label>Country</label>
-                                                        <select className="form-control" onChange={handleData} name="country" defaultValue={pageData && pageData.country}>
+                                                        <select className="form-control" onChange={handleData} name="country" defaultValue={data && data.country}>
                                                             {/* <option value=""> Afghanistan </option>
                                                             <option value=""> Albania </option>
                                                             <option value=""> Algeria </option>
@@ -259,8 +305,8 @@ export default function ProfileSection(){
                                                             <option value=""> Andorra </option>
                                                             <option value=""> Angola </option>*/}
                                                             <option value="select">-SELECT-</option>
-                                                            <option value="india" selected={pageData.country === 'india'}> India </option> 
-                                                            <option value="us" selected={pageData.country === 'us'}> US </option>
+                                                            <option value="india" selected={data.country === 'india'}> India </option> 
+                                                            <option value="us" selected={data.country === 'us'}> US </option>
                                                             {/* <option value="">...</option> */}
                                                         </select>
                                                     </div>
@@ -268,7 +314,7 @@ export default function ProfileSection(){
                                                 <div className="col-lg-4 col-md-6">
                                                 <div className="form-group">
                                                     <label>Zip code</label>
-                                                    <input type="number" name="zip" className="form-control" required onChange={handleData} defaultValue={pageData && pageData.zipcode}/>
+                                                    <input type="number" name="zip" className="form-control" required onChange={handleData} defaultValue={data && data.zip}/>
                                                 </div>
                                                 </div>
                                             </div>

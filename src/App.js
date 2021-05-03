@@ -27,7 +27,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				
+				<PublicRoute path="/" exact component={login} />{' '}
 				<PublicRoute path="/signup" component={signup} />{' '}
 				<PrivateApprovedRoute path="/dashboard" component={dashboard} />{' '}
 				<PrivateRoute path="/profile-details/:page" component={ProfileDetails} />{' '}
@@ -36,7 +36,6 @@ function App() {
 				<PrivateApprovedRoute path="/answer-question/:questionId" component={Answer} />{' '}
 				<PrivateApprovedRoute path="/profile" component={Profile} />{' '}
 				{/* <Route path="/product/:productId" component={ProductDetail} /> */}
-				<PublicRoute path="/" exact component={login} />{' '}
 			</Switch>
 		</BrowserRouter>
 	);
