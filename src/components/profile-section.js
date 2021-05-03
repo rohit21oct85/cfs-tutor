@@ -280,15 +280,15 @@ export default function ProfileSection(){
                                         <form id="msform" method="POST">
                                         <div className="form-card mb-4">
                                             <div className=" row">
-                                                <div className="form-group col-md-3 col-sm-3 m_p_0">
-                                                <label htmlFor="title">ClassName* </label>
+                                            <div className="form-group col-md-3 col-sm-3 m_p_0">
+                                                <label htmlFor="title">Class* </label>
                                                 <select className="form-control input-sm" name="degree"  required onChange={secondForm}>
                                                     <option value="">-SELECT-</option>
                                                     <option value="graduation">Graduation</option>
                                                     <option value="post graduation">Post Graduation</option>
                                                     <option value="doctrate">Doctrate</option>
                                                 </select>
-                                                </div>
+                                            </div>
                                                 <div className="form-group col-md-3 col-sm-3">
                                                 <label htmlFor="grade">Grade / CGPA / (%)*</label>
                                                 <input type="text" className="form-control input-sm" name="grade" placeholder="Percentage or Grade / CGPA / (%)*" required onChange={secondForm}/>

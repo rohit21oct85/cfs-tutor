@@ -7,6 +7,9 @@ export default function ProfileComp({...props}){
     const [bank, setBank] = useState();
     const [show, setShow] = useState('none');
 
+    let qualification = {};
+    let formdata = new FormData();
+
     const setChange = () => {
         if(show == 'none'){
             setShow('flex')
@@ -15,12 +18,39 @@ export default function ProfileComp({...props}){
         }
     }
 
+    const selectDoc = (e) =>{
+        formdata.append('file',e.target.files[0])
+    }
+    
     useEffect(() => {
         if(props.data){
             setBank(JSON.parse(props.data && props.data.bank_details))
         }
         return () => {}
     }, [props.data])
+
+    const deleteItem = async(index) => {
+        const response = await props.deleteEducation(index, localStorage.getItem('tutor_email'));
+    } 
+
+    const saveDegree = async(e) => {
+        e.preventDefault()
+        formdata.append('email',localStorage.getItem('tutor_email'))
+        formdata.append('degree',qualification.degree)
+        formdata.append('grade',qualification.grade)
+        formdata.append('school',qualification.school)
+        formdata.append('subject',qualification.subject)
+        formdata.append('years',qualification.years)
+        const response = await props.saveEducation(formdata);
+        if(response.status == 200){
+            qualification = {};
+        }
+    }
+
+    const secondForm = (e) => {
+        qualification[e.target.name] = e.target.value;
+    }
+
     return(
         <section className="content profile-page">
             <BlockHeader/>
@@ -100,7 +130,7 @@ export default function ProfileComp({...props}){
                                     </div>
                                     </div>
                                     <div className="col-md-12">
-                                    <button className="btn btn-primary btn-round" id="successProfileUpdatebtn" >Submit</button>
+                                    <button type="button" className="btn btn-primary btn-round" id="successProfileUpdatebtn" >Submit</button>
                                     </div>
                                 </div>
                                 {/* <!--	<div className="row clearfix" id="successfully" style="display:none;">
@@ -182,44 +212,42 @@ export default function ProfileComp({...props}){
                                     <div id="collapse9" className={`collapse ${display == 'collapse1' ? 'show' : ''}`} aria-labelledby="heading9" data-parent="#accordionExample">
                                         <div className="card-body">
                                             <div className="panel-body ">
-                                                <form action="" className="row">
+                                                <form method="POST" className="row">
                                                 <div className="form-group col-md-3 col-sm-3 m_p_0">
                                                     <label htmlFor="title">Class* </label>
-                                                    <select className="form-control input-sm"  required>
+                                                    <select className="form-control input-sm" name="degree"  required onChange={secondForm}>
                                                         <option value="">-SELECT-</option>
-                                                        <option value="Xth">Xth</option>
-                                                        <option value="XIIth">XIIth</option>
-                                                        <option value="Graduation">Graduation</option>
-                                                        <option value="Post Graduation">Post Graduation</option>
-                                                        <option value="Doctrate">Doctrate</option>
+                                                        <option value="graduation">Graduation</option>
+                                                        <option value="post graduation">Post Graduation</option>
+                                                        <option value="doctrate">Doctrate</option>
                                                     </select>
                                                 </div>
                                                 <div className="form-group col-md-3 col-sm-3">
-                                                    <label htmlFor="grade">Grade / (%)*</label>
-                                                    <input type="text" className="form-control input-sm"placeholder="Percentage or Grade" required/>
+                                                    <label htmlFor="grade">Grade / CGPA / (%)*</label>
+                                                    <input type="text" className="form-control input-sm" name="grade" placeholder="Percentage or Grade / CGPA / (%)*" required onChange={secondForm}/>
                                                 </div>
                                                 <div className="form-group col-md-3 col-sm-3">
-                                                    <label htmlFor="years">Years*</label>
-                                                    <input type="text" className="form-control input-sm"  placeholder="Years" required/>
+                                                <label htmlFor="years">Passing Year*</label>
+                                                <input type="text" className="form-control input-sm" name="years" placeholder="Passing Years" required onChange={secondForm}/>
                                                 </div>
                                                 <div className="form-group col-md-3 col-sm-3">
-                                                    <label htmlFor="subject">Subject* </label>
-                                                    <input type="text" className="form-control input-sm"  placeholder="Subject" required/>
+                                                <label htmlFor="subject">Main Subject* </label>
+                                                <input type="text" className="form-control input-sm" name="subject" placeholder="Main Subject" required onChange={secondForm}/>
                                                 </div>
                                                 <div className="form-group col-md-3 col-sm-3">
-                                                    <label htmlFor="school">School / Collage*</label>
-                                                    <input type="text" className="form-control input-sm"  placeholder="School / Collage" required/>
+                                                <label htmlFor="school">School / College*</label>
+                                                <input type="text" className="form-control input-sm" name="school" placeholder="School / College" required onChange={secondForm}/>
                                                 </div>
                                                 <div className="form-group col-md-8 col-sm-8">
-                                                    <label htmlFor="attach">Document Attach*</label>
-                                                    <input type="file" className="form-control" name="attach[]" id="attach" required/>
+                                                <label htmlFor="attach">Attach Educational Documents*</label>
+                                                <input type="file" className="form-control" name="file" id="attach" required onChange={selectDoc}/>
                                                 </div>
                                                 <div className="col-md-6 col-sm-6">
                                                     {/* <input type="button" className="btn btn-primary " value="Add more"/> */}
                                                 </div>
                                                 <div className="col-md-6 col-sm-6 text-right">
                                                     <div className="form-group pull-right">
-                                                        <input type="submit" className="btn btn-primary" name="submit" value="Submit"/>
+                                                        <input type="button" className="btn btn-primary" name="submit" value="Submit" onClick={saveDegree}/>
                                                     </div>
                                                 </div>
                                                 </form>
@@ -245,7 +273,7 @@ export default function ProfileComp({...props}){
                                                                 <td>{item.grade}</td>
                                                                 <td>{item.subject}</td>
                                                                 <td>{item.year}</td>
-                                                                <td><a  href="#">[DELETE]</a></td>
+                                                                <td><a  href="#" onClick={()=>{deleteItem(item._id)}}>[DELETE]</a></td>
                                                             </tr>
                                                         )
                                                     })}

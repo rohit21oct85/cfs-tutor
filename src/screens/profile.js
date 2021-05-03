@@ -2,7 +2,7 @@ import ProfileComp from "../components/profile-comp";
 import Header from '../components/header'
 import Sidebar from '../components/sidebar'
 import {useState,useEffect} from 'react'
-import { getTutotDetails } from '../api/profile';
+import { getTutotDetails, deleteEducation, saveEducation } from '../api/profile';
 
 export default function Profile(){
     const [passedData, setPassedData]= useState();
@@ -18,12 +18,13 @@ export default function Profile(){
         return () => {}
     }, [])
 
+  
 
     return(
         <>
             <Header/>
             <Sidebar/>
-            <ProfileComp data={passedData}/>
+            <ProfileComp data={passedData} deleteEducation={deleteEducation} saveEducation={saveEducation}/>
         </>
     )
 }
