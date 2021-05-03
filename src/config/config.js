@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const apiUrl = 'http://localhost:8080/tutor/v1/';
-const apiUrl = 'https://cfs-web-prod.herokuapp.com/tutor/v1/';
+const apiUrl = 'https://cfs-admin-panel.herokuapp.com/tutor/v1/';
 
 const config = {
     baseURL: apiUrl,
