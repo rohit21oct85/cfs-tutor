@@ -1,7 +1,6 @@
 {
   "name": "cfs-tutor",
   "version": "0.1.0",
-  "homepage": ".",
   "private": true,
   "engines": {
     "node": "12.18.3",
