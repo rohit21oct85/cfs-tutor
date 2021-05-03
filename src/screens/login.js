@@ -44,7 +44,11 @@ export default function Login(){
                 }else if((response.data.tutor.bank_details == '' || response.data.tutor.paypal == null) && response.data.tutor.paypal == '' ){
                     setLoading(false);
                     history.push('/profile-details/1');
-                }else{
+                }else if((typeof response.data.tutor.bank_details == 'undefined' && typeof response.data.tutor.paypal == 'undefined')){
+                    setLoading(false);
+                    history.push('/profile-details/1');
+                }
+                else{
                     setLoading(false);
                     history.push('/profile-details/5');
                 }
