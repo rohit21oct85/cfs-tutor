@@ -127,16 +127,16 @@ export default function Sidebar(){
                                     </div>
                                 </div>
                             </li>
-                            <li className="active open"><Link to="/dashboard"><i className="zmdi zmdi-home"></i><span>Dashborad</span></Link></li>
+                            <li className="active open"><Link to="/dashboard"><i className="zmdi zmdi-home"></i><span>Dashboard</span></Link></li>
                             <li className="active open"><Link to="/profile"><i className="zmdi zmdi-account"></i><span>Profile</span></Link></li>
-                            <li><Link to="/profile"><i className="zmdi zmdi-money"></i><span>My Earnings</span> </Link></li>
+                            {/* <li><Link to="/profile"><i className="zmdi zmdi-money"></i><span>My Earnings</span> </Link></li> */}
                             <li><Link to="start-answering"><i className="flaticon-answer"></i><span>Start Answering</span> </Link></li>
-                            <li><Link to="/profile"><i className="flaticon-work"></i><span>My work Stats</span> </Link></li>
+                            {/* <li><Link to="/profile"><i className="flaticon-work"></i><span>My work Stats</span> </Link></li>
                                 <li><Link to="/profile"><i className="flaticon-solution"></i><span>Sample Solutions</span> </Link></li>
                                 <li><Link to="/profile"><i className="flaticon-problem"></i><span>How it Works</span> </Link></li>
                                 <li><Link to="/profile"><i className="flaticon-guidelines"></i><span>Project Guidelines</span> </Link></li>
                                 <li><Link to="/profile"><i className="zmdi zmdi-notifications"></i><span>Notifications</span> </Link></li>
-                                <li><Link to="/profile"><i className="flaticon-faq"></i><span>FAQ</span> </Link></li>
+                                <li><Link to="/profile"><i className="flaticon-faq"></i><span>FAQ</span> </Link></li> */}
                             </ul>
                         </div>
                     </div>

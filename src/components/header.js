@@ -117,7 +117,7 @@ export default function Header(){
                 </li>
                 <li className="float-right">
                     <a className="Current_Wallet_Balance"   href="#" onClick={()=>{logout()}}><span> Logout </span></a> 
-                    <a href="#" className="mega-menu" data-close="true"><i className="zmdi zmdi-power"></i></a>           
+                    <a href="#" className="mega-menu" data-close="true" onClick={()=>{logout()}}><i className="zmdi zmdi-power"></i></a>           
                 </li>
             </ul>
         </nav>
