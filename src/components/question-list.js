@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { getChaptersAndQuestions } from '../api/book'
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import DataTable from "react-data-table-component";
 
 export default function QuestionList(){
     let  param  = useParams();
+    let  history  = useHistory();
     const [chapters, setChapters] = useState();
     const [questions, setQuestions] = useState();
     const [loading, setLoading] = useState(true);
@@ -69,27 +70,34 @@ export default function QuestionList(){
                         </div> */}
                         <div className="body">
                             <div className="row clearfix">
-                                <form action="" className="form-inline ">
-                                    <p className="mr-4 pl-3">Filter By</p>
-                                    <div className="input-container col-md-4 select_filter1 mr-4">
-                                    <select className="input-field" onChange={changeChapter}>
-                                        {chapters ? chapters.map((item,key)=>{
-                                            return(
-                                                <option key={key} value={item.chapter_no} >{item.chapter_name}</option>
-                                            )
-                                        }): <option>loading...</option>}
-                                    </select>
-                                    </div>
-                                    <div className="input-container col-md-4 select_filter1">
-                                    <select className="input-field">
-                                        {questions ? questions.map((item,key)=>{
-                                            return(
-                                                <option key={key} value={item._id} >{item.question.substring(0,100)}</option>
-                                            )
-                                        }): <option>loading...</option>}
-                                    </select>
-                                    </div>
-                                </form>
+                                <div className="col-md-6">
+                                    <form action="" className="form-inline ">
+                                        <p className="mr-4 pl-3">Filter By</p>
+                                        <div className="input-container col-md-4 select_filter1 mr-4">
+                                            <select className="input-field" onChange={changeChapter}>
+                                                {chapters ? chapters.map((item,key)=>{
+                                                    return(
+                                                        <option key={key} value={item.chapter_no} >{item.chapter_name}</option>
+                                                    )
+                                                }): <option>loading...</option>}
+                                            </select>
+                                        </div>
+                                        <div className="input-container col-md-4 select_filter1">
+                                            <select className="input-field">
+                                                {questions ? questions.map((item,key)=>{
+                                                    return(
+                                                        <option key={key} value={item._id} >{item.question.substring(0,100)}</option>
+                                                    )
+                                                }): <option>loading...</option>}
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="col-md-6 ">
+                                    <button className="btn btn-sm float-right" onClick={()=>{
+                                        history.push('/start-answering')
+                                    }}>back</button>
+                                </div>
                             </div>
                         </div>
                         {/* <div className="body">

@@ -2,10 +2,13 @@ import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import getBooks from '../api/book'
 import DataTable from "react-data-table-component";
+import { useHistory } from "react-router";
 
 export default function StartAns(){
     const [books, setBooks] = useState();
     const [loading, setLoading] = useState(true);
+    const history = useHistory();
+
     const columns = [
         {
             name: 'S.no',
@@ -49,50 +52,41 @@ export default function StartAns(){
     return(
         <div className="container-fluid">
             <div className="row clearfix">
-                {/* <div className="col-md-12">
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                    <div className="card mb-0">
+                    </div>
+                </div>
+                <div className="col-md-12">
                     <div className="card student-list">
-                        <div className="header">
-                            <h2><strong>Leader's </strong> Board</h2>
-                        </div>
+                        {/* <div className="header">
+                            <h2> QUESTIONS</h2>
+                        </div> */}
                         <div className="body">
-                            <div className="table-responsive">
-                            <table className="table table-hover m-b-0">
-                                <thead>
-                                    <tr className="table_title order">
-                                        <th>Book Name	</th>
-                                        <th>ISBN13</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {books && books.map((item, key)=>{
-                                        return(
-                                            <tr key={key}>{console.log(item)}
-                                                <td>{item.BookName}</td>
-                                                <td>{item.ISBN13}</td>
-                                                <td><Link to={`/book-question-list/${item.ISBN13}`}><a><span className="active_ques">Start Now</span></a></Link></td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
+                            <div className="row clearfix">
+                                <div className="col-md-6">
+                                </div>
+                                <div className="col-md-6 ">
+                                    <button className="btn btn-sm float-right" onClick={()=>{
+                                        history.goBack();
+                                    }}>back</button>
+                                </div>
+
+                            <DataTable
+                                title="Books"
+                                columns={columns}
+                                data={books}
+                                defaultSortField="sno"
+                                pagination
+                                striped={true}
+                                highlightOnHover={true}
+                                pointerOnHover={true}
+                                progressPending={loading}
+                            />
                             </div>
                         </div>
                     </div>
-                </div> */}
-                <DataTable
-                    title="Books"
-                    columns={columns}
-                    data={books}
-                    defaultSortField="sno"
-                    pagination
-                    striped={true}
-                    highlightOnHover={true}
-                    pointerOnHover={true}
-                    progressPending={loading}
-                />
+                </div>
             </div>
         </div>
-            
     )
 }
