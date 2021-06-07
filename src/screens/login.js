@@ -30,14 +30,15 @@ export default function Login(){
                 setError("Email or password not matched");
                 setLoading(false);
             }else{
+    
                 localStorage.setItem('tutor_token', response.data.accessToken)
                 localStorage.setItem('tutor_refresh_token', response.data.refreshToken);
-                localStorage.setItem('tutor_name', response.data.tutor.fullname);
+                localStorage.setItem('tutor_name', response.data.tutor.fname + " " + response.data.tutor.lname);
                 localStorage.setItem('tutor_email', response.data.tutor.email);
                 localStorage.setItem('tutor_approve', response.data.tutor.approve);
                 localStorage.setItem('tutor_id', response.data.tutor._id);
-                localStorage.setItem('mastered-subject-id', response.data.tutor.master_sub_subject_id);
-                console.log(response);
+                localStorage.setItem('mastered-subject-id', response.data.tutor.master_subject_id);
+
                 if(response.data.tutor.approve == 1){
                     setLoading(false);
                     history.push('/dashboard');
